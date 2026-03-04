@@ -8,14 +8,27 @@ from pathlib import Path
 
 app = FastAPI(title="SAF AI Predictor")
 
-# CORS (set ALLOWED_ORIGINS on Render, comma-separated)
-allowed_origins = os.getenv("ALLOWED_ORIGINS", "*")
-origins = [origin.strip() for origin in allowed_origins.split(",") if origin.strip()]
+# CORS
+# - ALLOWED_ORIGINS: comma-separated list, e.g. https://my-app.vercel.app,http://localhost:5173
+# - ALLOWED_ORIGIN_REGEX: optional regex for preview domains, default allows *.vercel.app
+raw_allowed_origins = os.getenv("ALLOWED_ORIGINS", "")
+origins = [
+    origin.strip().rstrip("/")
+    for origin in raw_allowed_origins.split(",")
+    if origin.strip()
+]
+
+if not origins:
+    origins = ["http://localhost:5173", "http://127.0.0.1:5173"]
+
+has_wildcard = "*" in origins
+allow_origin_regex = None if has_wildcard else os.getenv("ALLOWED_ORIGIN_REGEX", r"https://.*\.vercel\.app")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
-    allow_credentials=origins != ["*"],
+    allow_origin_regex=allow_origin_regex,
+    allow_credentials=not has_wildcard,
     allow_methods=["*"],
     allow_headers=["*"],
 )
