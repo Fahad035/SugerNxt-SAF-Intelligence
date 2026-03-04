@@ -3,19 +3,25 @@ from fastapi.middleware.cors import CORSMiddleware
 import joblib
 import numpy as np
 from pydantic import BaseModel
+import os
+from pathlib import Path
 
 app = FastAPI(title="SAF AI Predictor")
 
-# CORS (VERY IMPORTANT for React)
+# CORS (set ALLOWED_ORIGINS on Render, comma-separated)
+allowed_origins = os.getenv("ALLOWED_ORIGINS", "*")
+origins = [origin.strip() for origin in allowed_origins.split(",") if origin.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
+    allow_origins=origins,
+    allow_credentials=origins != ["*"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-model = joblib.load("saf_model.pkl")
+model_path = Path(__file__).resolve().parent / "saf_model.pkl"
+model = joblib.load(model_path)
 
 class InputData(BaseModel):
     molasses_ton: float
