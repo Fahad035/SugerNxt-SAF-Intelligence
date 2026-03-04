@@ -50,7 +50,7 @@ export default function LandingPage() {
           className="landing-hero premium-reveal p-2 sm:p-4"
         >
           <p className="text-xs font-semibold uppercase tracking-[0.25em] text-blue-300">
-            SugerNxt SAF Intelligence
+            SugarNxt SAF Intelligence
           </p>
           <h1 className="premium-title mt-4 max-w-5xl bg-gradient-to-r from-white via-blue-200 to-indigo-300 bg-clip-text text-transparent sm:text-4xl lg:text-6xl">
             Transforming sugar ecosystem insights into scalable sustainable aviation fuel strategy.

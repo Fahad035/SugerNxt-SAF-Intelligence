@@ -51,7 +51,7 @@ export default function Navbar() {
           </div>
           <div className="leading-tight">
             <h1 className="bg-gradient-to-r from-white via-blue-200 to-indigo-300 bg-clip-text text-base font-bold tracking-wide text-transparent sm:text-lg">
-              SugerNxt SAF Intelligence
+              SugarNxt SAF Intelligence
             </h1>
             <p className="hidden text-[11px] uppercase tracking-[0.2em] text-brand-muted sm:block">
               Aviation Fuel Decision Platform

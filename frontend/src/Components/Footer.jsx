@@ -11,7 +11,7 @@ export default function Footer() {
       <div className="mx-auto grid max-w-7xl gap-6 px-4 py-8 sm:px-6 lg:grid-cols-[1.2fr_1fr_1fr] lg:px-8">
         <div>
           <h3 className="bg-gradient-to-r from-blue-300 to-indigo-300 bg-clip-text text-sm font-semibold uppercase tracking-[0.2em] text-transparent">
-            SugerNxt
+            SugarNxt
           </h3>
           <p className="mt-3 max-w-md text-sm leading-6 text-brand-muted">
             Decision intelligence for SAF operations, emissions reduction, and financial planning.
@@ -83,7 +83,7 @@ export default function Footer() {
               <FaGithub className="h-4 w-4" />
             </a>
             <a
-              href="mailto:contact@sugernxt.com"
+              href="mailto:contact@sugarnxt.com"
               aria-label="Email"
               className="rounded-lg p-2 text-brand-muted transition hover:text-blue-300"
             >
@@ -94,7 +94,7 @@ export default function Footer() {
       </div>
 
       <div className="border-t border-brand-border/30 px-4 py-4 text-center text-xs text-brand-muted sm:px-6 lg:px-8">
-        © {year} SugerNxt SAF • Built for sustainable aviation fuel intelligence
+        © {year} SugarNxt SAF • Built for sustainable aviation fuel intelligence
       </div>
     </footer>
   );
