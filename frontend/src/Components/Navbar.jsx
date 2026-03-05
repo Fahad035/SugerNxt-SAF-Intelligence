@@ -91,16 +91,19 @@ export default function Navbar() {
             Dashboard
           </NavLink>
           <NavLink to="/sugar-process" className={navItemClass} onClick={closeMobileMenu}>
-            Sugar Process
+            Manufacturing
           </NavLink>
           <NavLink to="/sugar-news" className={navItemClass} onClick={closeMobileMenu}>
-            Sugar News
+             News
           </NavLink>
           <NavLink to="/digital-twin" className={navItemClass} onClick={closeMobileMenu}>
             Digital Twin
           </NavLink>
           <NavLink to="/financial" className={navItemClass} onClick={closeMobileMenu}>
             Financial
+          </NavLink>
+          <NavLink to="/strategy" className={navItemClass} onClick={closeMobileMenu}>
+            Strategy
           </NavLink>
         </nav>
       </div>
@@ -135,6 +138,9 @@ export default function Navbar() {
             </NavLink>
             <NavLink to="/financial" className={navItemClass} onClick={closeMobileMenu}>
               Financial
+            </NavLink>
+            <NavLink to="/strategy" className={navItemClass} onClick={closeMobileMenu}>
+              Strategy
             </NavLink>
           </nav>
         </div>

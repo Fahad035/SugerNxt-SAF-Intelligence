@@ -9,6 +9,7 @@ const SugarProcess = lazy(() => import("./Pages/SugarProcess"));
 const SugarNews = lazy(() => import("./Pages/SugarNews"));
 const DigitalTwin = lazy(() => import("./Pages/DigitalTwin"));
 const Financial = lazy(() => import("./Pages/FinancialPage"));
+const Strategy = lazy(() => import("./Pages/StrategyPage"));
 
 function AppShell() {
   const location = useLocation();
@@ -36,6 +37,7 @@ function AppShell() {
               <Route path="/sugar-news" element={<SugarNews />} />
               <Route path="/digital-twin" element={<DigitalTwin />} />
               <Route path="/financial" element={<Financial />} />
+              <Route path="/strategy" element={<Strategy />} />
             </Routes>
           </div>
         </Suspense>

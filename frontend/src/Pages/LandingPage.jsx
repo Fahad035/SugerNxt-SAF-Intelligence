@@ -68,6 +68,12 @@ export default function LandingPage() {
               Explore Dashboard
             </Link>
             <Link
+              to="/strategy"
+              className="rounded-xl border border-blue-400/70 bg-blue-500/10 px-5 py-3 text-sm font-semibold text-blue-200 transition duration-300 hover:-translate-y-0.5 hover:border-blue-300 hover:bg-blue-500/20"
+            >
+              Go to Strategy
+            </Link>
+            <Link
               to="/digital-twin"
               className="rounded-xl border border-brand-border/70 bg-transparent px-5 py-3 text-sm font-semibold text-brand-text transition duration-300 hover:-translate-y-0.5 hover:border-blue-400 hover:text-blue-300"
             >

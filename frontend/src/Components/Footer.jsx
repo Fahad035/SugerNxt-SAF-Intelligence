@@ -52,6 +52,11 @@ export default function Footer() {
                 Financial
               </Link>
             </li>
+            <li>
+              <Link to="/strategy" className="transition hover:translate-x-0.5 hover:text-blue-300">
+                Strategy
+              </Link>
+            </li>
           </ul>
         </div>
 
@@ -61,6 +66,7 @@ export default function Footer() {
             <li>Model-assisted SAF prediction</li>
             <li>Scenario comparison and export</li>
             <li>Operational and ROI analytics</li>
+            <li>TRL, market, and scale-up roadmap</li>
           </ul>
 
           <div className="mt-4 flex items-center gap-3">

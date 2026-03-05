@@ -1,5 +1,6 @@
 import { lazy, Suspense, useMemo, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import KPICard from "../Components/KpiCard";
 import SliderControl from "../Components/SliderControl";
 import {
@@ -234,8 +235,16 @@ export default function Dashboard() {
                   Professional operational and commercial insights for SAF production.
                 </p>
               </div>
-              <div className="rounded-lg bg-brand-card px-3 py-2 text-xs font-medium text-brand-muted">
-                Last updated: {lastUpdated || "Not yet run"}
+              <div className="flex items-center gap-2">
+                <div className="rounded-lg bg-brand-card px-3 py-2 text-xs font-medium text-brand-muted">
+                  Last updated: {lastUpdated || "Not yet run"}
+                </div>
+                <Link
+                  to="/strategy"
+                  className="rounded-lg border border-blue-400/60 bg-blue-500/10 px-3 py-2 text-xs font-semibold text-blue-200 transition hover:border-blue-300 hover:bg-blue-500/20"
+                >
+                  Go to Strategy
+                </Link>
               </div>
             </div>
 
@@ -296,7 +305,15 @@ export default function Dashboard() {
           <section className="rounded-2xl border border-brand-border bg-brand-surface p-5 shadow-sm">
             <div className="mb-4 flex items-center justify-between">
               <h3 className="text-base font-semibold text-brand-text">Scenario Comparison</h3>
-              <span className="text-xs text-brand-muted">Latest 8 runs</span>
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-brand-muted">Latest 8 runs</span>
+                <Link
+                  to="/strategy"
+                  className="rounded-md border border-blue-400/60 bg-blue-500/10 px-2.5 py-1.5 text-xs font-semibold text-blue-200 transition hover:border-blue-300 hover:bg-blue-500/20"
+                >
+                  Finalize commercialization plan
+                </Link>
+              </div>
             </div>
 
             {scenarioRuns.length === 0 ? (
