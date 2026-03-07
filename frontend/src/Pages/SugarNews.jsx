@@ -12,20 +12,51 @@ const FALLBACK_NEWS = [
     source: "Market Watch",
     pubDate: new Date().toISOString(),
     link: "https://www.reuters.com/",
+    image:
+      "https://picsum.photos/seed/sugar-market-watch/900/520",
+    summary:
+      "Producers and traders are recalibrating near-term positions as weather and harvest estimates change in key producing regions.",
   },
   {
     title: "India export policy updates influence short-term sugar trade",
     source: "Business Standard",
     pubDate: new Date().toISOString(),
     link: "https://www.bloomberg.com/",
+    image:
+      "https://picsum.photos/seed/sugar-india-trade/900/520",
+    summary:
+      "Policy changes are affecting contract timing and destination mix, especially for buyers balancing domestic and import strategies.",
   },
   {
     title: "Ethanol blending demand continues to affect raw sugar supply",
     source: "Commodity Insights",
     pubDate: new Date().toISOString(),
     link: "https://www.cnbc.com/",
+    image:
+      "https://picsum.photos/seed/sugar-ethanol-demand/900/520",
+    summary:
+      "Biofuel demand is reshaping mill allocation decisions between sugar and ethanol streams in multiple markets.",
   },
 ];
+
+function stripHtml(input) {
+  return String(input || "")
+    .replace(/<[^>]*>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function extractImageFromItem(item) {
+  if (item?.thumbnail) return item.thumbnail;
+  if (item?.enclosure?.link) return item.enclosure.link;
+
+  const html = `${item?.description || ""} ${item?.content || ""}`;
+  const imgMatch = html.match(/<img[^>]+src=["']([^"']+)["']/i);
+  if (imgMatch?.[1]) return imgMatch[1];
+
+  const seed = encodeURIComponent(item?.title || item?.link || "sugar-news");
+  return `https://picsum.photos/seed/${seed}/900/520`;
+}
 
 function readCachedNews() {
   try {
@@ -115,6 +146,10 @@ export default function SugarNews() {
           extractSourceFromLink(item.link),
         pubDate: item.pubDate,
         link: item.link,
+        image: extractImageFromItem(item),
+        summary:
+          stripHtml(item.description || item.content || "") ||
+          "Open article for full market context and business impact details.",
       }));
 
       const finalArticles = mapped.length > 0 ? mapped : FALLBACK_NEWS;
@@ -175,37 +210,38 @@ export default function SugarNews() {
       : articles.filter((article) => article.source === selectedSource);
 
   return (
-    <div className="min-h-[calc(100vh-4rem)] bg-brand-bg px-4 py-6 sm:px-6 lg:px-8">
+    <div className="min-h-[calc(100vh-4rem)] bg-[#f5f5f2] px-4 py-6 text-neutral-900 sm:px-6 lg:px-8">
       <div className="mx-auto max-w-7xl space-y-6">
-        <section className="premium-panel premium-reveal p-6 sm:p-8">
+        <section className="premium-reveal rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div>
-              <h1 className="premium-heading premium-title sm:text-3xl">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-neutral-500">Market Intelligence</p>
+              <h1 className="mt-2 text-3xl font-bold tracking-tight text-neutral-900 sm:text-4xl">
                 Daily Sugar Market News
               </h1>
-              <p className="premium-subtitle mt-3">
+              <p className="mt-3 max-w-3xl text-sm leading-6 text-neutral-600">
                 Live business and commodity updates relevant to the global sugar market.
               </p>
             </div>
             <div className="text-right">
               <button
                 onClick={loadNews}
-                className="rounded-lg border border-brand-border/60 px-4 py-2 text-sm font-semibold text-brand-text transition hover:border-blue-400 hover:text-blue-300"
+                className="rounded-lg border border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-800 transition hover:border-neutral-900 hover:text-neutral-900"
               >
                 Refresh News
               </button>
-              <p className="mt-2 text-xs text-brand-muted">Last updated: {lastUpdated || "Loading..."}</p>
+              <p className="mt-2 text-xs text-neutral-500">Last updated: {lastUpdated || "Loading..."}</p>
             </div>
           </div>
 
           {error && (
-            <div className="mt-4 rounded-lg border border-amber-500/40 bg-amber-900/30 px-4 py-3 text-sm text-amber-200">
+            <div className="mt-4 rounded-lg border border-amber-300 bg-amber-50 px-4 py-3 text-sm text-amber-900">
               {error}
             </div>
           )}
         </section>
 
-        <section className="premium-panel premium-reveal premium-reveal-delay-1 p-4 sm:p-5">
+        <section className="premium-reveal premium-reveal-delay-1 rounded-2xl border border-neutral-200 bg-white p-4 shadow-sm sm:p-5">
           <div className="flex flex-wrap gap-2">
             {sourceOptions.map((source) => (
               <button
@@ -213,8 +249,8 @@ export default function SugarNews() {
                 onClick={() => setSelectedSource(source)}
                 className={`rounded-full border px-3 py-1.5 text-xs font-semibold transition ${
                   selectedSource === source
-                    ? "border-blue-400 bg-blue-500/10 text-blue-300"
-                    : "border-brand-border/60 text-brand-muted hover:border-blue-500/70 hover:text-brand-text"
+                    ? "border-neutral-900 bg-neutral-900 text-white"
+                    : "border-neutral-300 text-neutral-600 hover:border-neutral-700 hover:text-neutral-900"
                 }`}
               >
                 {source}
@@ -226,31 +262,51 @@ export default function SugarNews() {
         {isLoading ? (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {[1, 2, 3, 4].map((item) => (
-              <div key={item} className="premium-card h-36 animate-pulse" />
+              <div key={item} className="h-64 animate-pulse rounded-2xl border border-neutral-200 bg-white" />
             ))}
           </div>
         ) : (
-          <section className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <section className="grid grid-cols-1 gap-5 md:grid-cols-2">
             {filteredArticles.map((article, index) => (
-              <article key={`${article.title}-${index}`} className="premium-card premium-reveal p-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-blue-300">{article.source}</p>
-                <h2 className="mt-2 line-clamp-3 text-base font-semibold leading-6 text-brand-text">{article.title}</h2>
-                <p className="mt-2 text-xs text-brand-muted">
-                  {new Date(article.pubDate).toLocaleString()}
-                </p>
-                <a
-                  href={article.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-4 inline-block text-sm font-semibold text-blue-300 hover:text-blue-200"
-                >
-                  Read full article →
-                </a>
+              <article
+                key={`${article.title}-${index}`}
+                className="premium-reveal overflow-hidden rounded-2xl border border-neutral-200 bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
+              >
+                <div className="aspect-[16/9] w-full overflow-hidden bg-neutral-200">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition duration-500 hover:scale-[1.03]"
+                    onError={(event) => {
+                      event.currentTarget.src = `https://picsum.photos/seed/${encodeURIComponent(article.source)}/900/520`;
+                    }}
+                  />
+                </div>
+
+                <div className="p-5">
+                  <div className="flex items-center justify-between gap-2">
+                    <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500">{article.source}</p>
+                    <p className="text-xs text-neutral-500">{new Date(article.pubDate).toLocaleDateString()}</p>
+                  </div>
+
+                  <h2 className="mt-2 line-clamp-3 text-base font-semibold leading-6 text-neutral-900">{article.title}</h2>
+                  <p className="mt-2 line-clamp-3 text-sm leading-6 text-neutral-600">{article.summary}</p>
+
+                  <a
+                    href={article.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="mt-4 inline-flex items-center rounded-md border border-neutral-300 px-3 py-1.5 text-sm font-semibold text-neutral-800 transition hover:border-neutral-900 hover:text-neutral-900"
+                  >
+                    Read full article
+                  </a>
+                </div>
               </article>
             ))}
 
             {!isLoading && filteredArticles.length === 0 && (
-              <div className="premium-panel p-6 text-sm text-brand-muted md:col-span-2">
+              <div className="rounded-2xl border border-neutral-200 bg-white p-6 text-sm text-neutral-600 md:col-span-2">
                 No articles found for this source. Try another filter.
               </div>
             )}

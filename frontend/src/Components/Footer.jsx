@@ -1,9 +1,29 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const [timeNow, setTimeNow] = useState(() =>
+    new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" })
+  );
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setTimeNow(
+        new Date().toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        })
+      );
+    }, 1000);
+
+    return () => {
+      window.clearInterval(timer);
+    };
+  }, []);
 
   return (
     <footer className="mt-12 bg-brand-bg">
@@ -99,8 +119,13 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="border-t border-brand-border/30 px-4 py-4 text-center text-xs text-brand-muted sm:px-6 lg:px-8">
-        © {year} SugarNxt SAF • Built for sustainable aviation fuel intelligence
+      <div className="border-t border-brand-border/30 px-4 py-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 text-xs text-brand-muted sm:flex-row">
+          <p>© {year} SugarNxt SAF • Built for sustainable aviation fuel intelligence. All rights reserved</p>
+          <p className="rounded-md border border-brand-border/50 bg-brand-surface/50 px-2.5 py-1 font-mono text-[11px] text-blue-200">
+            Time: {timeNow}
+          </p>
+        </div>
       </div>
     </footer>
   );
