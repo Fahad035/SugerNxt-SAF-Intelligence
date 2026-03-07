@@ -54,12 +54,12 @@ export default function Footer() {
             </li>
             <li>
               <Link to="/sugar-process" className="transition hover:translate-x-0.5 hover:text-blue-300">
-                Sugar Process
+                Manufacturing
               </Link>
             </li>
             <li>
               <Link to="/sugar-news" className="transition hover:translate-x-0.5 hover:text-blue-300">
-                Sugar News
+                News
               </Link>
             </li>
             <li>
